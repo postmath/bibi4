@@ -8,3 +8,10 @@ This site will offer the following features:
 * Make the secret pick of who gets something for whom -- you can only see your own pick
 * Optionally register wishes with the site
 * Claim someone else's wish(es), so that multiple people don't get the same thing for the same person, which everyone except the intended recipient can see
+
+To set up on a dev machine, follow the standard steps for a flask project, which I'll include below for easy reference.
+* `python3 -m venv venv`
+* `. venv/bin/activate`
+* `pip3 install flask`
+* `export FLASK_APP=bibi4`
+* `export FLASK_ENV=development`
