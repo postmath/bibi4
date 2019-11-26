@@ -13,5 +13,4 @@ To set up on a dev machine, follow the standard steps for a flask project, which
 * `python3 -m venv venv`
 * `. venv/bin/activate`
 * `pip3 install flask`
-* `export FLASK_APP=bibi4`
-* `export FLASK_ENV=development`
+* `pip3 install python-dotenv`
