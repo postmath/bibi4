@@ -12,5 +12,5 @@ This site will offer the following features:
 To set up on a dev machine, follow the standard steps for a flask project, which I'll include below for easy reference.
 * `python3 -m venv venv`
 * `. venv/bin/activate`
-* `pip3 install flask`
-* `pip3 install python-dotenv`
+* `pip install -r requirements.txt`
+
