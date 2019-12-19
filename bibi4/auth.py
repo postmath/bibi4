@@ -1,9 +1,12 @@
+import dataclasses
+
 from flask import (
-    Blueprint, request
+    Blueprint, request, redirect, url_for, flash, render_template
     )
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from bibi4.db import get_db
+from bibi4.user import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -13,29 +16,37 @@ def register():
         db = get_db()
         error = None
 
-        mapping = {'email': 'Email',
-                   'fullname': 'Full name',
-                   'password': 'Password',
-                   }
+        values = {}
+        
+        for field in dataclasses.fields(User):
+            if field.metadata.get('skip', False):
+                continue
 
-        for key, description in mapping:
-            if not request.form[key]:
+            description = field.metadata.get('description') or field.name
+            
+            if not request.form[field.name]:
                 error = '{} is required.'.format(description)
                 break
 
-            if db.execute(
-                    'SELECT id FROM user WHERE {} = ?'.format(key),
-                    (request.form[key],)
-                    ).fetchone() is not None:
-                error = '{} {} is already registered.'
-            error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
-        elif db.execute(
-                'SELECT id FROM user WHERE username = ?', (username,)
-        ).fetchone() is not None:
-            error = 'User {} is already registered.'.format(username)
+            value = request.form[field.name]
+            
+            if request.metadata.get('unique') and db.execute(
+                    'SELECT id FROM user WHERE {} = ?'.format(field.name),
+                    (value,)).fetchone() is not None:
+                error = '{} {} is already registered.'.format(description, value)
+
+            values[field.name] = value
 
         if error is None:
-            db.execute(
-                'INSERT INTO user
+            fieldnames = ', '.join(values.keys())
+            qmarks = ', '.join('?' * len(values))
+            to_fill_out = tuple(values.values())
+            db.execute('INSERT INTO user ({}) VALUES ({})'.format(fieldnames, qmarks), to_fill_out)
+            db.commit()
+            return redirect(url_for('auth.login'))
+        
+        else:
+            flash(error)
+            # fall through
+
+    return render_template('auth/register.html')
