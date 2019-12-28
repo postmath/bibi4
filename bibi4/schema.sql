@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS membership;
 CREATE TABLE user (
        id INTEGER PRIMARY KEY AUTOINCREMENT,
        email TEXT UNIQUE NOT NULL,
-       fullname TEXT UNIQUE NOT NULL,
+       username TEXT UNIQUE NOT NULL,
        password TEXT NOT NULL
 );
 
