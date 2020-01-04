@@ -7,11 +7,11 @@ VALUES
   -- password: 123
   (5, 'abc', 'abc@gmail.com', 'pbkdf2:sha256:150000$7VIhxSxX$ecf09a25b6bda05c5b73c8da53323713aaee68f58fc3a935ced51da68238963d');
 
-INSERT INTO ugroup (id, owner_id)
+INSERT INTO ugroup (id, groupname, owner_id)
 VALUES
-  (1, 1),
-  (2, 1),
-  (3, 5);
+  (1, 'group 1', 1),
+  (2, 'group 2', 1),
+  (3, 'group 3', 5);
 
 INSERT INTO membership (ugroup_id, user_id)
 VALUES
