@@ -11,6 +11,7 @@ CREATE TABLE user (
 
 CREATE TABLE ugroup (
        id INTEGER PRIMARY KEY AUTOINCREMENT,
+       groupname TEXT NOT NULL,
        owner_id INTEGER NOT NULL,
        FOREIGN KEY (owner_id) REFERENCES user (id)
 );

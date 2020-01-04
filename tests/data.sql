@@ -1,4 +1,4 @@
-INSERT INTO user (id, fullname, email, password)
+INSERT INTO user (id, username, email, password)
 VALUES
   -- password: test
   (1, 'test', 'test@foo.bar', 'pbkdf2:sha256:150000$E5C6Back$99a97c047748587bb21130a9c94d5c9199d6a18db9da1e23724fb400f4db22be'),
